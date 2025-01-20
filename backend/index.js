@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express"; 
+import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -19,29 +19,17 @@ app.use(urlencoded({ extended: true }));
 // CORS Configuration
 const corsOptions = {
     origin: [
-        "http://localhost:5173", 
-        "http://localhost:5174", 
+        "http://localhost:5173",
+        "http://localhost:5174",
         "https://baattak.vercel.app"
     ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true, // Allow sending cookies and other credentials
     allowedHeaders: ['Content-Type', 'Authorization'], // Include custom headers if needed
 };
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
-
-// Handle Preflight Requests
-app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-        // Handle the preflight request
-        res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify specific origins
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
-        return res.status(200).end(); // Respond with 200 OK and terminate the response
-    }
-    next(); // Pass the request to the next middleware
-});
 
 // Routes
 app.use("/api/v1/customer", CartRoutes);
